@@ -7,8 +7,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
   <link rel="stylesheet" href="css/style.css">
 
-  <script src="https://momentjs.com/downloads/moment-with-locales.js" charset="utf-8"></script>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -19,20 +17,24 @@
     <input id="query" type="text" name="" value="">
     <button id="query-button" type="button" name="button">Search</button>
   </div>
-  
-  <h2>Films</h2>
-  <ul class="films">
 
-  </ul>
+  <section class="container">
+    <h2>Films</h2>
+    <ul class="films">
 
-  <h2>TV</h2>
-  <ul class="tvs">
+    </ul>
+  </section>
 
-  </ul>
+  <section class="container">
+    <h2>TV</h2>
+    <ul class="tvs">
+
+    </ul>
+  </section>
 
 
   <script id="film-template" type="text/x-handlebars-template">
-   <li>
+    <li>
       {{title}}
       <ul>
         <li>{{type}}</li>
@@ -43,9 +45,9 @@
     </li>
   </script>
 
-    <script id="noresult-template" type="text/x-handlebars-template">
-      <li>Non ci sono risultati</li>
-    </script>
+  <script id="noresult-template" type="text/x-handlebars-template">
+    <li>Non ci sono risultati</li>
+  </script>
 
   <script src="js/script.js"></script>
 </body>

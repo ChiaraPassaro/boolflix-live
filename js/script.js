@@ -28,15 +28,15 @@ $(document).ready(function () {
 // Qui un esempio di chiamata per le serie tv:
 // https://api.themoviedb.org/3/search/tv?api_key=e99307154c6dfb0b4750f6603256716d&language=it_IT&query=scrubs
 
-
-
-// Functions -------------------
-
-
 // Trasformiamo il voto da 1 a 10 decimale in un numero intero da 1 a 5, così da permetterci di stampare a schermo un numero di stelle piene che vanno da 1 a 5, lasciando le restanti vuote (troviamo le icone in FontAwesome).
 // Arrotondiamo sempre per eccesso all’unità successiva, non gestiamo icone mezze piene (o mezze vuote :P)
 // <i class="fas fa-star"></i> piena
 // <i class="far fa-star"></i> vuota
+
+// Trasformiamo poi la stringa statica della lingua in una vera e propria bandiera della nazione corrispondente, gestendo il caso in cui non abbiamo la bandiera della nazione ritornata dall’API (le flag non ci sono in FontAwesome).
+
+// Functions -------------------
+
 function resetSearch() {
   $('.films').html('');
   $('.tvs').html('');
@@ -116,7 +116,6 @@ function printStars (num) {
   return string
 }
 
-// Trasformiamo poi la stringa statica della lingua in una vera e propria bandiera della nazione corrispondente, gestendo il caso in cui non abbiamo la bandiera della nazione ritornata dall’API (le flag non ci sono in FontAwesome).
 function printLanguage(string) {
   var availableLangs = [
     'en',
@@ -131,15 +130,13 @@ function printLanguage(string) {
 }
 
 
-
-
-
 // Esempio di risposta della API per search Movie
 //           "title": "Ritorno al futuro",
 //           "original_title": "Back to the Future",
 //           "original_language": "en",
 //           "vote_average": 8.2,
 
+// Esempio di risposta della API per search TV
 //             "original_name": "Scrubs",
 //             "name": "Scrubs",
 //             "vote_average": 7.9,
