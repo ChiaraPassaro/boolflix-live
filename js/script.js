@@ -5,23 +5,6 @@
 // Titolo Originale
 // Lingua
 // Voto
-
-
-
-
-
-// api_key
-// f45eed1b51907eec504d83c2a1f86cae
-$(document).ready(function () {
-  $('#query-button').click(function () {
-    var query = $('#query').val();
-    resetSearch();
-    getMovies(query);
-    getTv(query);
-  });
-});
-
-
 // Milestone 2
 
 // Allarghiamo poi la ricerca anche alle serie tv. Con la stessa azione di ricerca dovremo prendere sia i film che corrispondono alla query, sia le serie tv, stando attenti ad avere alla fine dei valori simili (le serie e i film hanno campi nel JSON di risposta diversi, simili ma non sempre identici)
@@ -35,7 +18,41 @@ $(document).ready(function () {
 
 // Trasformiamo poi la stringa statica della lingua in una vera e propria bandiera della nazione corrispondente, gestendo il caso in cui non abbiamo la bandiera della nazione ritornata dall’API (le flag non ci sono in FontAwesome).
 
+// api_key
+// f45eed1b51907eec504d83c2a1f86cae
+
+
+
+$(document).ready(function () {
+  $('#query-button').click(function () {
+    search();
+  });
+
+  $('#query').keypress(function (event) {
+    if(event.which == 13) {
+      search();
+    }
+  })
+});
+
+
 // Functions -------------------
+
+function search() {
+  var query = $('#query').val();
+  resetSearch();
+
+  var api_key = 'f45eed1b51907eec504d83c2a1f86cae';
+
+  var urlMovie = 'https://api.themoviedb.org/3/search/movie';
+  var urlTv = 'https://api.themoviedb.org/3/search/tv';
+
+  var typeMovie = 'film';
+  var typeTv = 'tv';
+
+  getData(query, api_key, urlMovie, typeMovie, '.films');
+  getData(query, api_key, urlTv, typeTv, '.tvs');
+}
 
 function resetSearch() {
   $('.films').html('');
@@ -43,10 +60,7 @@ function resetSearch() {
   $('#query').val('');
 }
 
-function getMovies(string) {
-  var api_key = 'f45eed1b51907eec504d83c2a1f86cae';
-  var url = 'https://api.themoviedb.org/3/search/movie';
-
+function getData(string, api_key, url, type, container) {
   $.ajax({
     url: url,
     method: 'GET',
@@ -58,39 +72,10 @@ function getMovies(string) {
     success: function(data) {
       //controllo che ci siano risultati
       if(data.total_results > 0) {
-        var films = data.results;
-        printResult('film', films);
+        var results = data.results;
+        printResult(type, results);
       } else {
-        printNoResult($('.films'));
-      }
-
-    },
-    error: function (request, state, errors) {
-      console.log(errors);
-    }
-  });
-
-}
-
-function getTv(string) {
-  var api_key = 'f45eed1b51907eec504d83c2a1f86cae';
-  var url = 'https://api.themoviedb.org/3/search/tv';
-
-  $.ajax({
-    url: url,
-    method: 'GET',
-    data: {
-      api_key: api_key,
-      query: string,
-      language: 'it-IT'
-    },
-    success: function(data) {
-      //controllo che ci siano risultati
-      if(data.total_results > 0) {
-        var tv = data.results;
-        printResult('tv', tv);
-      } else {
-        printNoResult($('.tvs'));
+        printNoResult($(container));
       }
 
     },
@@ -128,7 +113,6 @@ function printLanguage(string) {
 
   return string;
 }
-
 
 // Esempio di risposta della API per search Movie
 //           "title": "Ritorno al futuro",
