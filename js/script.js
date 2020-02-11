@@ -23,6 +23,13 @@
 
 
 
+// Milestone 3:
+// In questa milestone come prima cosa aggiungiamo la copertina del film o della serie al nostro elenco.
+//Ci viene passata dall’API solo la parte finale dell’URL, questo perché poi potremo generare da quella porzione di URL tante dimensioni diverse. Dovremo prendere quindi l’URL base delle immagini di TMDB: https://image.tmdb.org/t/p/ per poi aggiungere la dimensione che vogliamo generare (troviamo tutte le dimensioni possibili a questo link: https://www.themoviedb.org/talk/53c11d4ec3a3684cf4006400) per poi aggiungere la parte finale dell’URL passata dall’API.
+// Esempio di URL che torna la copertina di BORIS:
+// https://image.tmdb.org/t/p/w185/s2VDcsMh9ZhjFUxw77uCFDpTuXp.jpg
+
+
 $(document).ready(function () {
   $('#query-button').click(function () {
     search();
@@ -145,6 +152,16 @@ function printResult(type, results) {
       var container = $('.tvs');
     }
 
+    var posterImage;
+    var urlBaseImage = 'https://image.tmdb.org/t/p/w342';
+
+    if(thisResult.poster_path == null) {
+      posterImage = '<img src="img/default-poster.png" alt="'+ title +'">'
+    } else {
+        posterImage = '<img src="' + urlBaseImage + thisResult.poster_path + '" alt="'+ title +'">'
+    }
+    console.log(posterImage);
+
     // console.log(thisFilm);
     // thisFilm.vote_average
     var context = {
@@ -152,7 +169,8 @@ function printResult(type, results) {
       title: title,
       original_title: originalTitle,
       original_language: printLanguage(thisResult.original_language),
-      vote_average: printStars(thisResult.vote_average)
+      vote_average: printStars(thisResult.vote_average),
+      poster: posterImage
     };
 
     var html = template(context);
